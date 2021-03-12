@@ -11,6 +11,5 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
     UserInfo loadUserByUsername(String username);
-
     List<Role> getUserRolesById(Integer id);
 }
