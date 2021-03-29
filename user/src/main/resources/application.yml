@@ -26,7 +26,7 @@ eureka:
       prefer-ip-address: true
 oss:
   endpoint: http://oss-cn-beijing.aliyuncs.com
-  accessKeyId: LTAI5tR82efA1GJ7B6YgjsWL
-  accessKeySecret: 9W1g5qcVnCKsVlH0z7oHqQAau6kLXK
-  bucketName: kuaipao-henu
-  objectName: kuaipao-henu.oss-cn-beijing.aliyuncs.com
+  accessKeyId: #填写自己的信息
+  accessKeySecret:
+  bucketName:
+  objectName:
