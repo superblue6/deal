@@ -4,6 +4,8 @@ spring:
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
+  application:
+    name: deal-user
 server:
   tomcat:
     uri-encoding: utf-8
@@ -16,3 +18,15 @@ mybatis-plus:
     auto-mapping-behavior: full
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:mapper/*.xml
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8081/eureka/
+    instance:
+      prefer-ip-address: true
+oss:
+  endpoint: http://oss-cn-beijing.aliyuncs.com
+  accessKeyId: LTAI5tR82efA1GJ7B6YgjsWL
+  accessKeySecret: 9W1g5qcVnCKsVlH0z7oHqQAau6kLXK
+  bucketName: kuaipao-henu
+  objectName: kuaipao-henu.oss-cn-beijing.aliyuncs.com

@@ -1,4 +1,4 @@
-package com.kuaipao.user.dao;
+package com.kuaipao.user.mapper;
 
 import com.kuaipao.user.bean.Role;
 import com.kuaipao.user.bean.UserInfo;

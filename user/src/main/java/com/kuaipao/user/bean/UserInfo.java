@@ -10,8 +10,8 @@ import java.util.List;
 
 public class UserInfo implements UserDetails {
     private Integer id;
-    private String username;
-    private String password;
+    private String userName;
+    private String passWord;
     private Boolean enabled;
     private Boolean locked;
     public Integer getId() {
@@ -22,7 +22,7 @@ public class UserInfo implements UserDetails {
     }
     @Override
     public String getUsername() {
-        return username;
+        return userName;
     }
     @Override
     public boolean isAccountNonExpired() {
@@ -40,8 +40,8 @@ public class UserInfo implements UserDetails {
     public boolean isEnabled() {
         return enabled;
     }
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(String userName) {
+        this.userName = userName;
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -53,10 +53,10 @@ public class UserInfo implements UserDetails {
     }
     @Override
     public String getPassword() {
-        return password;
+        return passWord;
     }
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String passWord) {
+        this.passWord = passWord;
     }
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;

@@ -1,7 +1,7 @@
 package com.kuaipao.user.config;
 
 import com.kuaipao.user.bean.UserInfo;
-import com.kuaipao.user.dao.UserMapper;
+import com.kuaipao.user.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
