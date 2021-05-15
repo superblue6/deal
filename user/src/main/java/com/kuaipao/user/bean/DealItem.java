@@ -24,6 +24,8 @@ public class DealItem implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private String id;
+
     /**
      * 商品标题
      */
@@ -85,6 +87,4 @@ public class DealItem implements Serializable {
      * 描述
      */
     private String des;
-
-
 }

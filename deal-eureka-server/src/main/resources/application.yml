@@ -1,13 +1,13 @@
 spring:
   application:
-    name: EurekaServer #应用名
+    name: EurekaServer
 server:
   port: 8081
 eureka:
   instance:
     hostname: localhost
   client:
-    register-with-eureka: false #此服务不在注册到其他注册中心
-    fetch-registry: false #此服务不再从其他服务中心拉取服务器信息
+    register-with-eureka: false
+    fetch-registry: false
     service-url:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka

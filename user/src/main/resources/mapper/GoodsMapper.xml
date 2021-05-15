@@ -9,4 +9,15 @@
     <select id="getOldLevel" resultType="java.util.Map">
         select id,level from item_old_level
     </select>
+
+    <select id="getTop" resultType="java.util.Map">
+        SELECT item_id as id FROM `item_visit` ORDER BY times DESC LIMIT 0,#{number,jdbcType=INTEGER}
+    </select>
+
+    <select id="getTopGoods" resultType="com.kuaipao.user.bean.DealItem">
+        SELECT id,title,price,picturesUrl FROM deal_item WHERE id IN
+        <foreach collection="ids" open="(" separator="," close=")" item="item" >
+            #{item}
+        </foreach>
+    </select>
 </mapper>

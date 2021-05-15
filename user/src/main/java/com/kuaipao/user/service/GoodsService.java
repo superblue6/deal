@@ -8,4 +8,8 @@ public interface GoodsService extends IService<DealItem> {
     Result getGoodsCat(String id);
 
     Result getOldLevel();
+
+    Result getTopGoods(Integer number);
+
+    Result getGoodsDetail(String id);
 }

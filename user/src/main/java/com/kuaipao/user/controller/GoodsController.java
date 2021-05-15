@@ -1,7 +1,7 @@
 package com.kuaipao.user.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.google.inject.internal.asm.$TypePath;
+
 import com.kuaipao.commen.utils.OssTemplate;
 import com.kuaipao.user.bean.DealItem;
 import com.kuaipao.user.bean.UserInfo;
@@ -11,9 +11,6 @@ import com.kuaipao.user.utils.UserInfoUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-
-import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -38,20 +35,6 @@ public class GoodsController {
     public Result getOldLevel(){
         return goodsService.getOldLevel();
     }
-//    @PostMapping("/uploadPicture")
-//    public Result uploadPicture(MultipartHttpServletRequest request) throws IOException {
-//        List<MultipartFile> files = request.getFiles("pictures");
-//        List<String> list=new ArrayList<>();
-//        if (files!=null&&files.size()>0){
-//            for (MultipartFile item : files) {
-//                if (!item.isEmpty()){
-//                    String url = ossTemplate.upload(item.getInputStream(), item.getOriginalFilename());
-//                    list.add(url);
-//                }
-//            }
-//        }
-//        return new Result(list);
-//    }
     @PostMapping("/addGoods")
     public Result addGoods(@RequestParam("pictures") MultipartFile[] files,@RequestParam("goods") String json) throws IOException {
         UserInfo userInfo = userInfoUtil.getUserInfo();
@@ -78,5 +61,14 @@ public class GoodsController {
             result.setReturnMessage("保存商品失败");
             return result;
         }
+    }
+    @GetMapping("/getTopGoods")
+    public Result getTopGoods(@RequestParam("number") Integer number){
+        List<Integer> integers = new ArrayList<>();
+        return goodsService.getTopGoods(number);
+    }
+    @GetMapping("/getGoodsDetail")
+    public Result getGoodsDetail(@RequestParam("id")String id){
+        return goodsService.getGoodsDetail(id);
     }
 }
