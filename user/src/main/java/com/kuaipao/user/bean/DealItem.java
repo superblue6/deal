@@ -1,21 +1,24 @@
 package com.kuaipao.user.bean;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 /**
  * <p>
  * 商品表
  * </p>
  *
- * @author kuaipao
- * @since 2021-03-26
+ * @author jobob
+ * @since 2021-05-16
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -23,7 +26,10 @@ import java.time.LocalDateTime;
 public class DealItem implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    /**
+     * 商品id，同时也是商品编号
+     */
+    @TableId(value = "id", type = IdType.AUTO)
     private String id;
 
     /**
@@ -55,13 +61,13 @@ public class DealItem implements Serializable {
      * 商品图片
      */
     @TableField("picturesUrl")
-    private String picturesUrl;
+    private String picturesurl;
 
     /**
      * 所属类目，叶子类目
      */
     @TableField("categoryId")
-    private Long categoryId;
+    private Long categoryid;
 
     /**
      * 商品状态，1-正常，2-下架，3-删除
@@ -87,4 +93,6 @@ public class DealItem implements Serializable {
      * 描述
      */
     private String des;
+
+
 }

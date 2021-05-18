@@ -12,4 +12,8 @@ public interface GoodsService extends IService<DealItem> {
     Result getTopGoods(Integer number);
 
     Result getGoodsDetail(String id);
+
+    Result setScore(String id, String number);
+
+    Result initScore(String id);
 }

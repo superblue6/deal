@@ -1,11 +1,12 @@
 package com.kuaipao.user.service.serviceImp;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kuaipao.user.bean.Cat;
 import com.kuaipao.user.bean.DealItem;
+import com.kuaipao.user.bean.DealItemScore;
 import com.kuaipao.user.bean.DealUserContact;
 import com.kuaipao.user.bean.common.Result;
+import com.kuaipao.user.mapper.DealItemScoreMapper;
 import com.kuaipao.user.mapper.DealUserContactMapper;
 import com.kuaipao.user.mapper.GoodsMapper;
 import com.kuaipao.user.service.GoodsService;
@@ -25,6 +26,9 @@ public  class GoodsServiceImp extends ServiceImpl<GoodsMapper, DealItem> impleme
     @Autowired
     private DealUserContactMapper userContactMapper;
 
+    @Autowired
+    private DealItemScoreMapper dealItemSorceMapper;
+
     @Override
     public Result getGoodsCat(String id) {
         return new Result(loop("0"));
@@ -42,9 +46,9 @@ public  class GoodsServiceImp extends ServiceImpl<GoodsMapper, DealItem> impleme
         List<Integer> ids = list.stream().map(item -> item.get("id")).collect(Collectors.toList());
         List<DealItem> topGoods = goodsMapper.getTopGoods(ids);
         for (DealItem item : topGoods) {
-            String picturesUrls = item.getPicturesUrl();
+            String picturesUrls = item.getPicturesurl();
             String[] url = picturesUrls.split(",");
-            item.setPicturesUrl(url[0]);
+            item.setPicturesurl(url[0]);
         }
         return new Result(topGoods);
     }
@@ -54,11 +58,40 @@ public  class GoodsServiceImp extends ServiceImpl<GoodsMapper, DealItem> impleme
         Map<String, Object> data = new HashMap<>();
         DealItem dealItem = baseMapper.selectById(id);
         DealUserContact userContact = userContactMapper.selectById(dealItem.getSellerId());
+        DealItemScore itemScore = dealItemSorceMapper.selectById(id);
+        itemScore.setItemVisit(itemScore.getItemVisit()+1);
+        dealItemSorceMapper.updateById(itemScore);
         data.put("dalItem",dealItem);
         data.put("userContact",userContact);
         Result<Object> result = new Result<>();
         result.setBean(data);
         return result;
+    }
+
+    @Override
+    public Result setScore(String id, String number) {
+        DealItemScore itemSorce = dealItemSorceMapper.selectById(id);
+        float oScore = Float.parseFloat(itemSorce.getItemSorce());
+        int time = Integer.parseInt(itemSorce.getItemSorceTime())+1;
+        float nu = Float.parseFloat(number);
+        float nScore = nu+oScore;
+        itemSorce.setItemSorce(String.format("%.1f",nScore)).setItemSorceTime((Integer.parseInt(itemSorce.getItemSorceTime())+1)+"");
+        int res = dealItemSorceMapper.updateById(itemSorce);
+        if (res>0){
+            return new Result("successful");
+        }
+        Result<Object> result = new Result<>();
+        result.setReturnCode("111");
+        result.setReturnMessage("更新评分失败");
+        return result;
+    }
+
+    @Override
+    public Result initScore(String id) {
+        DealItemScore itemScore = new DealItemScore();
+        itemScore.setItemId(Integer.valueOf(id));
+        int i = dealItemSorceMapper.insert(itemScore);
+        return new Result(i);
     }
 
     //递归查询商品分类
@@ -71,5 +104,4 @@ public  class GoodsServiceImp extends ServiceImpl<GoodsMapper, DealItem> impleme
         }
         return goodsCat;
     }
-
 }
