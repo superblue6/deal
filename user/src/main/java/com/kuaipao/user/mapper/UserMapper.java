@@ -1,5 +1,6 @@
 package com.kuaipao.user.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.kuaipao.user.bean.Role;
 import com.kuaipao.user.bean.UserInfo;
 import org.apache.ibatis.annotations.Mapper;
@@ -12,4 +13,5 @@ import java.util.List;
 public interface UserMapper {
     UserInfo loadUserByUsername(String username);
     List<Role> getUserRolesById(Integer id);
+    UserInfo getUserById(String id);
 }

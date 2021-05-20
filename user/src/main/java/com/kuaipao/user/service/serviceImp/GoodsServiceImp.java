@@ -1,14 +1,12 @@
 package com.kuaipao.user.service.serviceImp;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.kuaipao.user.bean.Cat;
-import com.kuaipao.user.bean.DealItem;
-import com.kuaipao.user.bean.DealItemScore;
-import com.kuaipao.user.bean.DealUserContact;
+import com.kuaipao.user.bean.*;
 import com.kuaipao.user.bean.common.Result;
 import com.kuaipao.user.mapper.DealItemScoreMapper;
 import com.kuaipao.user.mapper.DealUserContactMapper;
 import com.kuaipao.user.mapper.GoodsMapper;
+import com.kuaipao.user.mapper.UserMapper;
 import com.kuaipao.user.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +26,9 @@ public  class GoodsServiceImp extends ServiceImpl<GoodsMapper, DealItem> impleme
 
     @Autowired
     private DealItemScoreMapper dealItemSorceMapper;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     public Result getGoodsCat(String id) {
@@ -61,8 +62,12 @@ public  class GoodsServiceImp extends ServiceImpl<GoodsMapper, DealItem> impleme
         DealItemScore itemScore = dealItemSorceMapper.selectById(id);
         itemScore.setItemVisit(itemScore.getItemVisit()+1);
         dealItemSorceMapper.updateById(itemScore);
+        UserInfo user = userMapper.getUserById(dealItem.getSellerId());
+        Map<String, Object> map = new HashMap<>(2);
+        map.put("contact",userContact);
+        map.put("userName",user.getUsername());
         data.put("dalItem",dealItem);
-        data.put("userContact",userContact);
+        data.put("userContact",map);
         Result<Object> result = new Result<>();
         result.setBean(data);
         return result;

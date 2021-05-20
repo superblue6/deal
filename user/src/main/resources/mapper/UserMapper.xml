@@ -3,9 +3,12 @@
 
 <mapper namespace="com.kuaipao.user.mapper.UserMapper">
     <select id="loadUserByUsername" resultType="com.kuaipao.user.bean.UserInfo">
-        select * from user where username=#{username}
+        select * from  deal_user where userName=#{username}
     </select>
     <select id="getUserRolesById" resultType="com.kuaipao.user.bean.Role">
         select * from role where id in (select rid from user_role where uid=#{id})
+    </select>
+    <select id="getUserById" resultType="com.kuaipao.user.bean.UserInfo">
+        select * from deal_user where userId=#{userId}
     </select>
 </mapper>
