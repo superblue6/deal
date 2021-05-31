@@ -1,5 +1,6 @@
 package com.kuaipao.user.service.serviceImp;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kuaipao.user.bean.*;
 import com.kuaipao.user.bean.common.Result;
@@ -11,6 +12,7 @@ import com.kuaipao.user.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,9 +45,15 @@ public  class GoodsServiceImp extends ServiceImpl<GoodsMapper, DealItem> impleme
 
     @Override
     public Result getTopGoods(Integer number) {
-        List<Map<String, Integer>> list = goodsMapper.getTop(number);
-        List<Integer> ids = list.stream().map(item -> item.get("id")).collect(Collectors.toList());
-        List<DealItem> topGoods = goodsMapper.getTopGoods(ids);
+        List<DealItem> topGoods=new ArrayList<>();
+        if (number!=null){
+            List<Map<String, Integer>> list = goodsMapper.getTop(number);
+            List<Integer> ids = list.stream().map(item -> item.get("id")).collect(Collectors.toList());
+            topGoods = goodsMapper.getTopGoods(ids);
+        }
+        else {
+            topGoods=goodsMapper.selectList(new QueryWrapper<>());
+        }
         for (DealItem item : topGoods) {
             String picturesUrls = item.getPicturesurl();
             String[] url = picturesUrls.split(",");
@@ -73,6 +81,7 @@ public  class GoodsServiceImp extends ServiceImpl<GoodsMapper, DealItem> impleme
         return result;
     }
 
+
     @Override
     public Result setScore(String id, String number) {
         DealItemScore itemSorce = dealItemSorceMapper.selectById(id);
@@ -91,6 +100,7 @@ public  class GoodsServiceImp extends ServiceImpl<GoodsMapper, DealItem> impleme
         return result;
     }
 
+    //初始化商品评分表
     @Override
     public Result initScore(String id) {
         DealItemScore itemScore = new DealItemScore();

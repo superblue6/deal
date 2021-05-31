@@ -68,8 +68,7 @@ public class GoodsController {
         }
     }
     @GetMapping("/getTopGoods")
-    public Result getTopGoods(@RequestParam("number") Integer number){
-        List<Integer> integers = new ArrayList<>();
+    public Result getTopGoods(@RequestParam(value = "number",required = false) Integer number){
         return goodsService.getTopGoods(number);
     }
     @GetMapping("/getGoodsDetail")
